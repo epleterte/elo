@@ -31,7 +31,7 @@ while getopts hp:l o
 do
         case $o in
                 h)
-                print_usage ;;
+                print_usage ; exit ;;
                 p)
                 listen_port="${OPTARG}" ;;
                 l)
