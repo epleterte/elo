@@ -22,15 +22,18 @@ print_usage() {
 Usage: ${0} [-h|-l]
         -h      Halp.
         -l      Listen for remote connections
+        -p      Listen port, used with -l (default: $listen_port)
 
 EOF
 }
 
-while getopts hl o
+while getopts hp:l o
 do
         case $o in
                 h)
                 print_usage ;;
+                p)
+                listen_port="${OPTARG}" ;;
                 l)
                 socat tcp-listen:${listen_port},reuseaddr,fork,crlf system:"${0}",pty,stderr,sigint,sane,setsid,echo=0
                 exit
