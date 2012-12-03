@@ -1,0 +1,16 @@
+>       _       
+>   ___| | ___  
+>  / _ \ |/ _ \ 
+> |  __/ | (_) |
+>  \___|_|\___/ 
+> 
+> * electric light orchestration *
+> welcome to elo - YOUR interface to futuristic home CONTRLOL
+> available commands are list,learn,on <device>,off <device>,help,exit
+> 
+> list
+1       adventslys1     OFF
+> 
+> on 1
+Turning on device 1, adventslys1 - Success
+>
