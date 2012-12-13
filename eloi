@@ -27,6 +27,9 @@ Usage: ${0} [-h|-l]
 EOF
 }
 
+# default config
+listen="false"
+
 while getopts hp:l o
 do
   case $o in
@@ -35,12 +38,13 @@ do
     p)
       listen_port="${OPTARG}" ;;
     l)
-      socat tcp-listen:${listen_port},reuseaddr,fork,crlf system:"${0}",pty,stderr,sigint,sane,setsid,echo=0
-      exit
+      listen="true"
       ;;
   esac
 done
 shift $(($OPTIND-1))
+
+[ "${listen}" == "true" ] && { socat tcp-listen:${listen_port},reuseaddr,fork,crlf system:"${0}",pty,stderr,sigint,sane,setsid,echo=0 ; exit; }
 
 prompt '      _       '
 prompt '  ___| | ___  '
