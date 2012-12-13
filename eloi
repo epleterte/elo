@@ -27,10 +27,18 @@ Usage: ${0} [-h|-l]
 EOF
 }
 
+function cleanup() {
+  # kill children
+  c=$( jobs -p )
+  [ "${c}" ] && kill $( jobs -p )
+}
+
+trap "cleanup" EXIT
 # default config
 listen="false"
+announce="false"
 
-while getopts hp:l o
+while getopts hp:la o
 do
   case $o in
     h)
@@ -38,12 +46,14 @@ do
     p)
       listen_port="${OPTARG}" ;;
     l)
-      listen="true"
-      ;;
+      listen="true" ;;
+    a)
+      announce="true" ;;
   esac
 done
 shift $(($OPTIND-1))
 
+[ "${listen}" == "true" -a "${announce}" == "true" ] && avahi-publish-service eloi _telnet._tcp 9700 "Control lights and stuff" >/dev/null &
 [ "${listen}" == "true" ] && { socat tcp-listen:${listen_port},reuseaddr,fork,crlf system:"${0}",pty,stderr,sigint,sane,setsid,echo=0 ; exit; }
 
 prompt '      _       '
