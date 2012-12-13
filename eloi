@@ -27,13 +27,12 @@ Usage: ${0} [-h|-l]
 EOF
 }
 
-function cleanup() {
-  # kill children
+function kill_children() {
   c=$( jobs -p )
-  [ "${c}" ] && kill $( jobs -p )
+  [ "${c}" == "" ] || kill $( jobs -p )
 }
 
-trap "cleanup" EXIT
+trap "kill_children" EXIT
 # default config
 listen="false"
 announce="false"
