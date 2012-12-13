@@ -14,11 +14,11 @@
 listen_port=9700
 
 prompt() {
-        echo "> $@"
+  echo "> $@"
 }
 
 print_usage() {
-        cat <<EOF
+  cat <<EOF
 Usage: ${0} [-h|-l]
         -h      Halp.
         -l      Listen for remote connections
@@ -29,16 +29,16 @@ EOF
 
 while getopts hp:l o
 do
-        case $o in
-                h)
-                print_usage ; exit ;;
-                p)
-                listen_port="${OPTARG}" ;;
-                l)
-                socat tcp-listen:${listen_port},reuseaddr,fork,crlf system:"${0}",pty,stderr,sigint,sane,setsid,echo=0
-                exit
-                ;;
-        esac
+  case $o in
+    h)
+      print_usage ; exit ;;
+    p)
+      listen_port="${OPTARG}" ;;
+    l)
+      socat tcp-listen:${listen_port},reuseaddr,fork,crlf system:"${0}",pty,stderr,sigint,sane,setsid,echo=0
+      exit
+      ;;
+  esac
 done
 shift $(($OPTIND-1))
 
@@ -52,30 +52,25 @@ prompt '* electric light orchestration *'
 prompt welcome to elo - YOUR interface to futuristic home CONTRLOL
 prompt "available commands are list,learn,on <device>,off <device>,help,exit"
 while read -p '> ' command arg; do
-        case $command in
-                '')
-                        continue ;;
-                help)
-                        prompt 'available commands: list,learn,on,off,help,exit' ;;
-                list)
-                        tdtool -l | egrep -v "^$" | sed 1d || { prompt "'$command' command failed"; continue; }
-                        ;;
-                on)
-                        [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
-                        tdtool -n $arg || { prompt "'$command' command failed"; continue; }
-                        ;;
-                off)
-                        [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
-                        tdtool -f $arg || { prompt "'$command' command failed"; continue; }
-                        ;;
-                learn)
-                        [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
-                        tdtool -e $arg || { prompt "'$command' command failed!"; continue; }
-                        ;;
-
-                exit)
-                        break ;;
-                *)
-                        echo "unknown command '$command'" ; continue ;;
-        esac
+  case $command in
+    '')
+      continue ;;
+    help)
+      prompt 'available commands: list,learn,on,off,help,exit' ;;
+    list)
+      tdtool -l | egrep -v "^$" | sed 1d || { prompt "'$command' command failed"; continue; } ;;
+    on)
+      [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
+      tdtool -n $arg || { prompt "'$command' command failed"; continue; } ;;
+    off)
+      [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
+      tdtool -f $arg || { prompt "'$command' command failed"; continue; } ;;
+    learn)
+      [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
+      tdtool -e $arg || { prompt "'$command' command failed!"; continue; } ;;
+    exit)
+      break ;;
+    *)
+      echo "unknown command '$command'" ; continue ;;
+  esac
 done
