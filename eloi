@@ -28,8 +28,9 @@ EOF
 }
 
 function kill_children() {
+  # XXX: fix this
   c=$( jobs -p )
-  [ "${c}" == "" ] || kill $( jobs -p )
+  [ "${c}" == "" ] || kill $( jobs -p ) >/dev/null 2>&1 || true
 }
 
 trap "kill_children" EXIT
