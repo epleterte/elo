@@ -48,12 +48,19 @@ do
     l)
       listen="true" ;;
     a)
-      announce="true" ;;
+      if ( which avahi-publish-service >/dev/null )
+      then
+        announce="true"
+      else
+        echo "error> avahi-publish-service not found in PATH, service announcement not enabled "
+      fi
+      ;;
   esac
 done
 shift $(($OPTIND-1))
 
-[ "${listen}" == "true" -a "${announce}" == "true" ] && avahi-publish-service eloi _telnet._tcp 9700 "Control lights and stuff" >/dev/null &
+# avahi-publish-service prints info messages to stderr...
+[ "${listen}" == "true" -a "${announce}" == "true" ] && avahi-publish-service eloi _telnet._tcp 9700 "Control lights and stuff" >/dev/null 2>&1 &
 [ "${listen}" == "true" ] && { socat tcp-listen:${listen_port},reuseaddr,fork,crlf system:"${0}",pty,stderr,sigint,sane,setsid,echo=0 ; exit; }
 
 prompt '      _       '
