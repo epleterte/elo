@@ -1,20 +1,21 @@
 ~ $ telnet pi 9700
-Trying 10.0.3.14...
-Connected to pi.lan.
+Trying 127.0.0.1...
+Connected to localhost.
 Escape character is '^]'.
->       _       
->   ___| | ___  
->  / _ \ |/ _ \ 
+>       _
+>   ___| | ___
+>  / _ \ |/ _ \
 > |  __/ | (_) |
->  \___|_|\___/ 
-> 
+>  \___|_|\___/
+>
 > * electric light orchestration *
 > welcome to elo - YOUR interface to futuristic home CONTRLOL
 > available commands are list,learn,on <device>,off <device>,help,exit
-> 
 > list
-1       adventslys1     OFF
-> 
-> on 1
-Turning on device 1, adventslys1 - Success
+1       adventslys1     ON
+2       adventslys2     ON
+3       adventslys3     OFF
+>
+> on 3
+Turning on device 3, adventslys3 - Success
 >
