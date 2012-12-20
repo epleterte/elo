@@ -10,7 +10,8 @@ Escape character is '^]'.
 >
 > * electric light orchestration *
 > welcome to elo - YOUR interface to futuristic home CONTRLOL
-> available commands are list,learn,on <device>,off <device>,help,exit
+> available commands are list,learn,on <device>,off <device>,dim <device> [<value>],help,exit
+> valid values for dim are 0-255
 > list
 1       adventslys1     ON
 2       adventslys2     ON
