@@ -71,8 +71,9 @@ prompt ' \___|_|\___/ '
 prompt ''
 prompt '* electric light orchestration *'
 prompt welcome to elo - YOUR interface to futuristic home CONTRLOL
-prompt "available commands are list,learn,on <device>,off <device>,help,exit"
-while read -p '> ' command arg; do
+prompt "available commands are list,learn,on <device>,off <device>,dim <device> [<value>],help,exit"
+prompt 'valid values for dim are 0-255'
+while read -p '> ' command arg val; do
   case $command in
     '')
       continue ;;
@@ -86,6 +87,14 @@ while read -p '> ' command arg; do
     off)
       [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
       tdtool -f $arg || { prompt "'$command' command failed"; continue; } ;;
+    dim)
+      [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
+      if [ "${val:-}" == "" ]
+      then
+        tdtool --dim "$arg" || { prompt "'$command' command failed"; continue; }
+      else
+        tdtool --dimlevel "$val" --dim "$arg" || { prompt "'$command' command failed"; continue; }
+      fi ;;
     learn)
       [ "${arg:-}" == "" ] && { prompt "'$command' needs an argument (id or name)"; continue; }
       tdtool -e $arg || { prompt "'$command' command failed!"; continue; } ;;
