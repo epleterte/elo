@@ -19,10 +19,11 @@ prompt() {
 
 print_usage() {
   cat <<EOF
-Usage: ${0} [-h|-l]
+Usage: ${0} [-h|-l|-p|-a]
         -h      Halp.
         -l      Listen for remote connections
         -p      Listen port, used with -l (default: $listen_port)
+        -a      Announce telnet service using avahi (use with listen)
 
 EOF
 }
